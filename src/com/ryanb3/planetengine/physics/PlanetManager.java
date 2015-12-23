@@ -13,6 +13,7 @@ public class PlanetManager implements Runnable {
 
 	private ArrayList<Sphere> objects;
 	private double screenCross;
+	private double scale;
 
 	public PlanetManager(ArrayList<Sphere> objects, Dimension screenDimensions) {
 		this.objects = objects;
@@ -92,19 +93,21 @@ public class PlanetManager implements Runnable {
 	}
 
 	public double getScale() {
-		double scale = 0;
-		MyVector center = getCenterOfMass();
+		if (scale == 0) {
+			scale = 0;
+			MyVector center = getCenterOfMass();
 		
-		double maxDistance = 0;
-		for (int i = 0; i < objects.size(); i++) {
-			double distance = objects.get(i).getPosition().getDistance(center);
-			
-			if(distance > maxDistance) {
-				maxDistance = distance;
+			double maxDistance = 0;
+			for (int i = 0; i < objects.size(); i++) {
+				double distance = objects.get(i).getPosition().getDistance(center);
+				
+				if(distance > maxDistance) {
+					maxDistance = distance;
+				}
 			}
+			
+			scale = maxDistance * 10 / screenCross;
 		}
-		
-		scale = maxDistance * 10 / screenCross;
 		
 		return scale;
 	}
