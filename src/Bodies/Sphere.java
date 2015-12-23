@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import Main.Main;
 import Math.MyVector;
+import Physics.PlanetManager;
 
 public class Sphere {
 
@@ -16,17 +17,14 @@ public class Sphere {
 	private Color color;
 	private double id = Math.random();
 	private String name;
-	private boolean markedForRemoval;
-	private boolean newborn;
 	
-	public Sphere(double mass, MyVector position, MyVector velocity, Color color, double radius, String name) { //Radius in pixels
+	public Sphere(double mass, MyVector possition, MyVector velocity, Color color, double radius, String name) { //Radius in pixels
 		this.name = name;
 		this.radius = radius;
 		this.mass = mass;
-		this.position = position;
+		this.position = possition;
 		this.velocity = velocity;
 		this.color = color;
-		markedForRemoval = false;
 	}
 	
 	public void calcAcceleration(ArrayList<Sphere> otherBodies) {
@@ -39,15 +37,13 @@ public class Sphere {
 			}
 		}
 		acceleration = totalAcc;
-		
-		if(newborn) newborn = false;
 	}
 	
 	public void move(double time) {
 	    velocity = velocity.addTo(acceleration.scale(time));
 	    position = position.addTo(velocity.scale(time).addTo(acceleration.scale(.5 * Math.pow(time, 2))));
 	}
-
+	
 	public double getRadius() {
 		return radius;
 	}
@@ -72,19 +68,4 @@ public class Sphere {
 		return color;
 	}
 	
-	public void markForRemoval() {
-		markedForRemoval = true;
-	}
-	
-	public void markAsNewborn() {
-		newborn = true;
-	}
-	
-	public boolean isNewborn() {
-		return newborn;
-	}
-	
-	public boolean isMarkedForRemoval() {
-		return markedForRemoval;
-	}
 }
