@@ -94,7 +94,6 @@ public class PlanetManager implements Runnable {
 
 	public double getScale() {
 		if (scale == 0) {
-			scale = 0;
 			MyVector center = getCenterOfMass();
 		
 			double maxDistance = 0;
