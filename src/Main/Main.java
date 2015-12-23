@@ -25,9 +25,9 @@ public class Main {
 	public Main() {
 		Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();
 		objects = new ArrayList<Sphere>();
-		addNewObject(new Sphere(5.93e24, new MyVector(0, 0, 0), new MyVector(0, 30000, 0), Color.GREEN, 10, "earth"));
-		addNewObject(new Sphere(3.1e22, new MyVector(0, 1.84e10, 0), new MyVector(1014.9, 30000, 0), Color.BLUE, 5, "moon"));
-		addNewObject(new Sphere(1.989e30, new MyVector(1.49604618e11, 0, 0), new MyVector(0, 0, 0), Color.YELLOW, 50, "sun"));
+		addNewObject(new Sphere(5.93e24, new MyVector(0, 0, 0), new MyVector(0, 30000, 0), Color.GREEN, 6371393, "earth"));
+		addNewObject(new Sphere(3.1e22, new MyVector(0, 1.84e10, 0), new MyVector(3014.9, 30000, 0), Color.BLUE, 3737000, "moon"));
+		addNewObject(new Sphere(1.989e30, new MyVector(1.49604618e11, 0, 0), new MyVector(0, 0, 0), Color.YELLOW, 696300000, "sun"));
 		//addNewObject(new Sphere(1.989e33, new MyVector(0, 9.49604618e11, 0), new MyVector(0, 0, 0), Color.GRAY, 50, "earth"));
 		//addNewObject(new Sphere(0, new MyVector(0, 3.84e8, 0), new MyVector(1014.9, 0, 0), Color.BLUE, 0, "moon"));
 		display = new Frame(screenDimensions, objects);

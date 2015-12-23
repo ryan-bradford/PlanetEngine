@@ -44,8 +44,7 @@ public class PlanetManager extends Thread {
 				MyVector position1 = sphere1.getPosition();
 				MyVector velocity1 = sphere1.getVelocity();
 				double mass1 = sphere1.getMass();
-				double radius1 = sphere1.getRadius()*scale;
-				Color color1 = sphere1.getColor();
+				double radius1 = sphere1.getRadius();
 				for (int j = 0; j < objects.size(); j++) {
 					Sphere sphere2 = objects.get(j);
 					if(sphere1 == sphere2) continue;
@@ -53,7 +52,7 @@ public class PlanetManager extends Thread {
 					MyVector position2 = sphere2.getPosition();
 					MyVector velocity2 = sphere2.getVelocity();
 					double mass2 = sphere2.getMass();
-					double radius2 = sphere2.getRadius()*scale;
+					double radius2 = sphere2.getRadius();
 					Color color2 = sphere2.getColor();
 					
 					double dx = position2.x - position1.x;
@@ -82,7 +81,7 @@ public class PlanetManager extends Thread {
 						Random random = new Random();
 						Color resultColor = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
 						
-						Sphere resultSphere = new Sphere(resultMass, resultPosition, resultVelocity, resultColor, (int) (resultRadius/getScale()), resultName);
+						Sphere resultSphere = new Sphere(resultMass, resultPosition, resultVelocity, resultColor, (int) (resultRadius), resultName);
 						resultSphere.markAsNewborn();
 						objects.add(resultSphere);
 						

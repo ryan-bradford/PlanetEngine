@@ -31,7 +31,7 @@ public class CreateObjectButton extends JButton {
 				double xv = Double.parseDouble(JOptionPane.showInputDialog("What Is The X Velocity Of This Object?"));
 				double yv = Double.parseDouble(JOptionPane.showInputDialog("What Is The Y Velocity Of This Object?"));
 				double zv = Double.parseDouble(JOptionPane.showInputDialog("What Is The Z Velocity Of This Object?"));
-				int radius = Integer.parseInt(JOptionPane.showInputDialog("What Is The Radius Of This Object on the Screen (In Pixels)?"));
+				double radius = Double.parseDouble(JOptionPane.showInputDialog("What Is The Radius Of This Object on the Screen (In Pixels)?"));
 				objects.add(new Sphere(mass, new MyVector(x, y, z), new MyVector(xv, yv, zv),
 						new Color((int)(Math.random() * 255), (int)(Math.random() * 255), (int)(Math.random()*255)), radius, name));
 				phyics.reCalcScale();

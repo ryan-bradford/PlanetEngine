@@ -44,10 +44,14 @@ public class Panel extends JPanel {
 				g.setColor(objects.get(i).getColor());
 				double thisX = objects.get(i).getPosition().x;
 				double thisY = objects.get(i).getPosition().y;
-				int radius = objects.get(i).getRadius();
+				double radius = (objects.get(i).getRadius() / (scale / 1000));
+				if(radius > 100) {
+					radius = 100;
+				}
 				double x = (thisX) / scale - radius / 2 + screenDimensions.width/2;
 				double y = (thisY) / scale - radius / 2 + screenDimensions.height/2;
-				g.fillOval((int) (x - (center.x)/scale), (int) (y - (center.y)/scale), radius, radius);
+				System.out.println(objects.get(i).getName() + " " + radius);
+				g.fillOval((int) (x - (center.x)/scale), (int) (y - (center.y)/scale), (int)radius, (int)radius);
 			}
 		} catch (NullPointerException ex) {
 			ex.printStackTrace();

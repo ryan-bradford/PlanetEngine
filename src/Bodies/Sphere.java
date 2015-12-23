@@ -8,7 +8,7 @@ import Math.MyVector;
 
 public class Sphere {
 
-	private int radius;
+	private double radius;
 	private double mass;
 	private MyVector position;
 	private MyVector velocity;
@@ -19,7 +19,7 @@ public class Sphere {
 	private boolean markedForRemoval;
 	private boolean newborn;
 	
-	public Sphere(double mass, MyVector position, MyVector velocity, Color color, int radius, String name) { //Radius in pixels
+	public Sphere(double mass, MyVector position, MyVector velocity, Color color, double radius, String name) { //Radius in pixels
 		this.name = name;
 		this.radius = radius;
 		this.mass = mass;
@@ -48,7 +48,7 @@ public class Sphere {
 	    position = position.addTo(velocity.scale(time).addTo(acceleration.scale(.5 * Math.pow(time, 2))));
 	}
 
-	public int getRadius() {
+	public double getRadius() {
 		return radius;
 	}
 	
