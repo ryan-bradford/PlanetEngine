@@ -41,10 +41,10 @@ public class Panel extends JPanel {
 			g.drawRect(0, 0, screenDimensions.width, screenDimensions.height);
 			double scale = manager.getScale();
 			for (int i = 0; i < objects.size(); i++) {
-				g.setColor(objects.get(i).color);
-				double thisX = objects.get(i).possition.x;
-				double thisY = objects.get(i).possition.y;
-				int radius = objects.get(i).radius;
+				g.setColor(objects.get(i).getColor());
+				double thisX = objects.get(i).getPosition().x;
+				double thisY = objects.get(i).getPosition().y;
+				int radius = objects.get(i).getRadius();
 				double x = (thisX) / scale - radius / 2 + screenDimensions.width/2;
 				double y = (thisY) / scale - radius / 2 + screenDimensions.height/2;
 				g.fillOval((int) (x - (center.x)/scale), (int) (y - (center.y)/scale), radius, radius);
