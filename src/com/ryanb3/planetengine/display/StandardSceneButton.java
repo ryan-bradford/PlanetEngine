@@ -1,4 +1,4 @@
-package Display;
+package com.ryanb3.planetengine.display;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -8,36 +8,40 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import Bodies.Sphere;
-import Math.MyVector;
-import Physics.PlanetManager;
+import com.ryanb3.planetengine.body.Sphere;
+import com.ryanb3.planetengine.math.MyVector;
+import com.ryanb3.planetengine.physics.PlanetManager;
 
 public class StandardSceneButton extends JButton {
 
-	ArrayList<Sphere> objects;
-	PlanetManager physics;
+	private ArrayList<Sphere> objects;
 	
 	public StandardSceneButton(String message, ArrayList<Sphere> objects, PlanetManager phyics) {
 		super(message);
-		this.physics = phyics;
 		this.objects = objects;
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String name = JOptionPane.showInputDialog("Type in 1-5 for a scene, and 6 if you want a random one");
-				if(name.equals("1")) {
+				int scene = Integer.parseInt(JOptionPane.showInputDialog("Type in 1-5 for a scene, and 6 if you want a random one"));
+				switch (scene) {
+				case 1:
 					addSceneOne();
-				} else if(name.equals("2")) {
+					break;
+				case 2:
 					addSceneTwo();
-				} else if(name.equals("3")) {
+					break;
+				case 3:
 					addSceneThree();
-				} else if(name.equals("4")) {
+					break;
+				case 4:
 					addSceneFour();
-				} else if(name.equals("5")) {
+					break;
+				case 5:
 					addSceneFive();
-				} else if(name.equals("6")) {
+					break;
+				default:
 					addSceneRandom();
+					break;
 				}
-				//phyics.reCalcScale();
 			}
 		});
 

@@ -1,4 +1,4 @@
-package Physics;
+package com.ryanb3.planetengine.physics;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -6,29 +6,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-import Bodies.Sphere;
-import Math.MyVector;
+import com.ryanb3.planetengine.body.Sphere;
+import com.ryanb3.planetengine.math.MyVector;
 
-public class PlanetManager extends Thread {
+public class PlanetManager implements Runnable {
 
-	ArrayList<Sphere> objects;
-	MyVector center;
-	double screenCross;
-	public double scale;
-	int counter = 0;
+	private ArrayList<Sphere> objects;
+	private double screenCross;
 
 	public PlanetManager(ArrayList<Sphere> objects, Dimension screenDimensions) {
 		this.objects = objects;
-		center = new MyVector(0,0,0);
 		screenCross = Math.sqrt(Math.pow(screenDimensions.width, 2) + Math.pow(screenDimensions.height, 2));
 	}
 
 	public void run() {
 		while (true) {
 			try {
-				sleep(1);
+				Thread.sleep(1);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			for (int i = 0; i < objects.size(); i++) {
@@ -38,8 +33,6 @@ public class PlanetManager extends Thread {
 				Sphere sphere1 = objects.get(i);
 				if (sphere1.isMarkedForRemoval() || sphere1.isNewborn()) continue;
 				sphere1.move(500);
-				
-				double scale = getScale();
 				
 				MyVector position1 = sphere1.getPosition();
 				MyVector velocity1 = sphere1.getVelocity();
@@ -53,7 +46,6 @@ public class PlanetManager extends Thread {
 					MyVector velocity2 = sphere2.getVelocity();
 					double mass2 = sphere2.getMass();
 					double radius2 = sphere2.getRadius();
-					Color color2 = sphere2.getColor();
 					
 					double dx = position2.x - position1.x;
 					double dy = position2.y - position1.y;
@@ -85,6 +77,9 @@ public class PlanetManager extends Thread {
 						resultSphere.markAsNewborn();
 						objects.add(resultSphere);
 						
+						System.out.println("Collision");
+						System.out.println(resultMass);
+						
 						break;
 					}
 				}
@@ -95,40 +90,37 @@ public class PlanetManager extends Thread {
 			}
 		}
 	}
-	
-	public void reCalcScale() {
-		double max = 0;
-		for (int i = 0; i < objects.size(); i++) {
-			double distance = objects.get(i).getPosition().getDistance(center);
-			if (distance > max) {
-				max = distance;
-			}
-		}
-		scale = max * 10 / (screenCross);
-	}
 
 	public double getScale() {
-		if (counter == 0) {
-			double max = 0;
-			for (int i = 0; i < objects.size(); i++) {
-				double distance = objects.get(i).getPosition().getDistance(center);
-				if (distance > max) {
-					max = distance;
-				}
+		double scale = 0;
+		MyVector center = getCenterOfMass();
+		
+		double maxDistance = 0;
+		for (int i = 0; i < objects.size(); i++) {
+			double distance = objects.get(i).getPosition().getDistance(center);
+			
+			if(distance > maxDistance) {
+				maxDistance = distance;
 			}
-			scale = max * 10 / (screenCross);
-			counter++;
 		}
+		
+		scale = maxDistance * 10 / screenCross;
+		
 		return scale;
 	}
 	
 	public MyVector getCenterOfMass() {
 		MyVector center = new MyVector(0, 0, 0);
 		double totalMass = 0;
+		
 		for(int i = 0; i < objects.size(); i++) {
-			center = center.addTo(objects.get(i).getPosition().scale(objects.get(i).getMass()));
-			totalMass += objects.get(i).getMass();
+			Sphere object = objects.get(i);
+			double mass = object.getMass();
+			
+			center = center.addTo(object.getPosition().scale(mass));
+			totalMass += mass;
 		}
+		
 		return center.scale(1 / totalMass);
 	}
 

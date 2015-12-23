@@ -1,10 +1,8 @@
-package Math;
+package com.ryanb3.planetengine.math;
 
 public class MyVector {
 
-	public double x = 0;
-	public double y = 0;
-	double z = 0;
+	public double x, y, z;
 	
 	public MyVector(double x, double y, double z) {
 		this.x = x;
@@ -28,7 +26,7 @@ public class MyVector {
 		double total = 0;
 		total += Math.pow((x - from.x), 2);
 		total += Math.pow((y - from.y), 2);
-		//total += Math.pow((z - from.z), 2);
+		total += Math.pow((z - from.z), 2);
 		return Math.sqrt(total);
 	}
 	

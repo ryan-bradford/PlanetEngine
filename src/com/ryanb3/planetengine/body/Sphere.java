@@ -1,20 +1,22 @@
-package Bodies;
+package com.ryanb3.planetengine.body;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.UUID;
 
-import Main.Main;
-import Math.MyVector;
+import com.ryanb3.planetengine.math.MyVector;
 
 public class Sphere {
 
+	private final static double G = 6.67e-11;
+	
 	private double radius;
 	private double mass;
 	private MyVector position;
 	private MyVector velocity;
 	private MyVector acceleration;
 	private Color color;
-	private double id = Math.random();
+	private UUID id;
 	private String name;
 	private boolean markedForRemoval;
 	private boolean newborn;
@@ -26,16 +28,18 @@ public class Sphere {
 		this.position = position;
 		this.velocity = velocity;
 		this.color = color;
+		id = UUID.randomUUID();
 		markedForRemoval = false;
 	}
 	
 	public void calcAcceleration(ArrayList<Sphere> otherBodies) {
 		MyVector totalAcc = new MyVector(0, 0, 0);
 		for(int i = 0; i < otherBodies.size(); i++) {
+			Sphere other = otherBodies.get(i);
 			//if(id != otherBodies.get(i).id && !name.equals("earth")) {
-			if(id != otherBodies.get(i).id) {
-				MyVector displacement = otherBodies.get(i).position.subtract(position);
-				totalAcc = totalAcc.addTo(displacement.norm().scale(Main.G * otherBodies.get(i).mass/Math.pow(displacement.getMag(), 2)));
+			if(!id.equals(other.id)) {
+				MyVector displacement = other.getPosition().subtract(position);
+				totalAcc = totalAcc.addTo(displacement.norm().scale(G * other.getMass()/Math.pow(displacement.getMag(), 2)));
 			}
 		}
 		acceleration = totalAcc;
