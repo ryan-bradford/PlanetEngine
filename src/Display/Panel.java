@@ -24,13 +24,12 @@ public class Panel extends JPanel {
 		this.setLayout(null);
 		this.setBackground(Color.black);
 		manager = new PlanetManager(objects, screenDimensions);
-		CreateObjectButton objectButton = new CreateObjectButton("Add A Body!", objects, manager);
-		objectButton.setBounds(100, 100, 100, 100);
+		CreateObjectButton objectButton = new CreateObjectButton("New Body!", objects, manager);
+		objectButton.setBounds(100, 100, 150, 100);
 		add(objectButton, 0);
-		StandardSceneButton sceneButton = new StandardSceneButton("Add A Scene!", objects, manager);
-		sceneButton.setBounds(100, 300, 100, 100);
+		StandardSceneButton sceneButton = new StandardSceneButton("New Scene!", objects, manager);
+		sceneButton.setBounds(100, 300, 150, 100);
 		add(sceneButton, 0);
-		
 	}
 
 	@Override
