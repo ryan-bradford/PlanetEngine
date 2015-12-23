@@ -68,9 +68,10 @@ public class PlanetManager extends Thread {
 						double resultVelocityY = (mass1*velocity1.y + mass2*velocity2.y)/(mass1+mass2);
 						MyVector resultVelocity = new MyVector(resultVelocityX, resultVelocityY, 0);
 						
-						double resultPositionX = (position1.x + position2.x)/2;
-						double resultPositionY = (position1.y + position2.y)/2;
+						double resultPositionX = (position1.x*mass1 + position2.x*mass2)/(mass1+mass2);
+						double resultPositionY = (position1.y*mass1 + position2.y*mass2)/(mass1+mass2);
 						MyVector resultPosition = new MyVector(resultPositionX, resultPositionY, 0);
+						resultPosition.addTo(resultVelocity.scale(500));
 						
 						double resultRadius = Math.sqrt(radius1*radius1+radius2*radius2);
 						
