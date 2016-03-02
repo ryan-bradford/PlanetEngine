@@ -13,6 +13,7 @@ public class Sphere {
 	private double radius;
 	private double mass;
 	private MyVector position;
+	private MyVector screenPosition;
 	private MyVector velocity;
 	private MyVector acceleration;
 	private Color color;
@@ -68,6 +69,10 @@ public class Sphere {
 		return velocity;
 	}
 	
+	public MyVector getScreenPosition() {
+		return screenPosition;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -90,5 +95,9 @@ public class Sphere {
 	
 	public boolean isMarkedForRemoval() {
 		return markedForRemoval;
+	}
+	
+	public void setScreenPossition(MyVector possition) {
+		this.screenPosition = possition;
 	}
 }
