@@ -1,13 +1,11 @@
 package com.ryanb3.planetengine;
 
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
-import javax.swing.Timer;
 
 import com.ryanb3.planetengine.body.Sphere;
 import com.ryanb3.planetengine.display.Panel;
@@ -18,6 +16,7 @@ public class PlanetEngine {
 	private Panel display;
 	
 	public PlanetEngine() {
+		
 		Dimension screenDimensions = Toolkit.getDefaultToolkit().getScreenSize();
 		
 		display = new Panel(screenDimensions);

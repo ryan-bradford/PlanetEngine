@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.ryanb3.planetengine.body.Sphere;
+import com.ryanb3.planetengine.clickControls.MouseControls;
 import com.ryanb3.planetengine.math.MyVector;
 import com.ryanb3.planetengine.physics.PlanetManager;
 
@@ -29,7 +30,62 @@ public class Panel extends JPanel {
 
 		objects = new ArrayList<Sphere>();
 		planetManager = new PlanetManager(objects, screenDimensions, this);
+	
+		newPlanetButton();		
+		removePlanetButton();
+		sceneButton();
+		
+		initMouseControls();
+	}
 
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		try {
+			MyVector center = planetManager.getCenterOfMass();
+
+			g.setColor(Color.black);
+			g.drawRect(0, 0, screenDimensions.width, screenDimensions.height);
+
+			double scale = planetManager.getScale();
+			for (int i = 0; i < objects.size(); i++) {
+				Sphere object = objects.get(i);
+
+				g.setColor(object.getColor());
+
+				MyVector position = object.getPosition();
+				double realX = position.x;
+				double realY = position.y;
+				double radius = (object.getRadius());
+
+				double x = (realX) / scale - radius + screenDimensions.width / 2;
+				double y = (realY) / scale - radius + screenDimensions.height / 2;
+				objects.get(i).setScreenPossition(new MyVector(x, y, 0));
+				g.fillOval((int) (x - (center.x) / scale), (int) (y - (center.y) / scale), (int) radius, (int) radius);
+			}
+		} catch (NullPointerException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public void addNewObject(Sphere object) {
+		objects.add(object);
+	}
+
+	public PlanetManager getPlanetManager() {
+		return planetManager;
+	}
+
+	public ArrayList<Sphere> getObjects() {
+		return objects;
+	}
+ 
+	public void initMouseControls() {
+		MouseControls mouseControls = new MouseControls(screenDimensions, planetManager, this);
+		this.addMouseListener(mouseControls);
+	}
+	
+	public void newPlanetButton() {
 		JButton objectButton = new JButton("New Body!");
 		objectButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -60,10 +116,13 @@ public class Panel extends JPanel {
 					
 				}
 			}
-		});		
+		});	
+		
 		objectButton.setBounds(100, 100, 150, 100);
 		add(objectButton, 0);
-		
+	}
+	
+	public void removePlanetButton() {
 		JButton removeButton = new JButton("Remove All Bodies");
 		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -75,51 +134,11 @@ public class Panel extends JPanel {
 		});
 		removeButton.setBounds(100, 500, 150, 100);
 		add(removeButton, 0);
-
+	}
+	
+	public void sceneButton() {
 		StandardSceneButton sceneButton = new StandardSceneButton("New Scene!", objects, planetManager);
 		sceneButton.setBounds(100, 300, 150, 100);
 		add(sceneButton, 0);
-	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		try {
-			MyVector center = planetManager.getCenterOfMass();
-
-			g.setColor(Color.black);
-			g.drawRect(0, 0, screenDimensions.width, screenDimensions.height);
-
-			double scale = planetManager.getScale();
-			for (int i = 0; i < objects.size(); i++) {
-				Sphere object = objects.get(i);
-
-				g.setColor(object.getColor());
-
-				MyVector position = object.getPosition();
-				double realX = position.x;
-				double realY = position.y;
-				double radius = (object.getRadius());
-
-				double x = (realX) / scale - radius / 2 + screenDimensions.width / 2;
-				double y = (realY) / scale - radius / 2 + screenDimensions.height / 2;
-				objects.get(i).setScreenPossition(new MyVector(x, y, 0));
-				g.fillOval((int) (x - (center.x) / scale), (int) (y - (center.y) / scale), (int) radius, (int) radius);
-			}
-		} catch (NullPointerException ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	public void addNewObject(Sphere object) {
-		objects.add(object);
-	}
-
-	public PlanetManager getPlanetManager() {
-		return planetManager;
-	}
-
-	public ArrayList<Sphere> getObjects() {
-		return objects;
 	}
 }
